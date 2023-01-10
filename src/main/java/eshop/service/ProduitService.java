@@ -21,6 +21,11 @@ public class ProduitService {
         if (produit == null) {
             throw new ProduitException();
         }
+        if (produit.getFournisseur() == null) {
+        	produit.setOnSale(false);
+        } else {
+        	produit.setOnSale(true);
+        }
         return produitRepository.save(produit);
     }
 

@@ -58,12 +58,4 @@ public class Fournisseur extends Compte {
 	public void setProduits(List<Produit> produits) {
 		this.produits = produits;
 	}
-
-	public boolean isEnActivite() {
-		return enActivite;
-	}
-
-	public void setEnActivite(boolean enActivite) {
-		this.enActivite = enActivite;
-	}
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import eshop.entity.Fournisseur;
 import eshop.jsonview.Views;
 import eshop.service.FournisseurService;
+import eshop.util.Check;
 
 @RestController
 @RequestMapping("/api/fournisseur")
@@ -36,9 +38,7 @@ public class FournisseursRestController {
 	@PostMapping("")
 	@JsonView(Views.Common.class)
 	public Fournisseur create(@Valid @RequestBody Fournisseur fournisseur, BindingResult br) {
-		if (br.hasErrors()) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-		}
+		Check.checkBindingResulHasError(br);
 		return fournisseurServ.create(fournisseur);
 	}
 	
@@ -46,9 +46,7 @@ public class FournisseursRestController {
 	@PutMapping("/{id}")
 	@JsonView(Views.Common.class)
 	public Fournisseur update(@Valid @RequestBody Fournisseur fournisseur, BindingResult br, @PathVariable Long id) {
-		if (br.hasErrors()) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-		}
+		Check.checkBindingResulHasError(br);
 		fournisseur.setId(id);
 		return fournisseurServ.update(fournisseur);
 	}
@@ -69,20 +67,20 @@ public class FournisseursRestController {
 	
 	@GetMapping("/nom/{nom}")
 	@JsonView(Views.Common.class)
-	public Fournisseur getByNom(@PathVariable String nom) {
-		return fournisseurServ.getByNom(nom);
+	public List<Fournisseur> getByNom(@PathVariable String nom) {
+		return fournisseurServ.getByNomContaining(nom);
 	}
 	
 	@GetMapping("/contact/{contact}")
 	@JsonView(Views.Common.class)
-	public Fournisseur getByContact(@PathVariable String contact) {
-		return fournisseurServ.getByContact(contact);
+	public List<Fournisseur> getByContact(@PathVariable String contact) {
+		return fournisseurServ.getByContactContaining(contact);
 	}
 	
 	@GetMapping("/email/{email}")
 	@JsonView(Views.Common.class)
-	public Fournisseur getByEmail(@PathVariable String email) {
-		return fournisseurServ.getByEmail(email);
+	public List<Fournisseur> getByEmail(@PathVariable String email) {
+		return fournisseurServ.getByEmailContaining(email);
 	}
 
 	// Recherche page fournisseurs GET

@@ -14,16 +14,19 @@ public interface FournisseurRepository extends JpaRepository<Fournisseur, Long> 
 
     List<Fournisseur> findByProduitsIsTrue();
 
-    List<Fournisseur> findByNomContaining(String nom);
+    List<Fournisseur> findByNom(String nom);
 
     Page<Fournisseur> findByNomContaining(String nom, Pageable pageable);
 
     @Query("select f from Fournisseur f left join fetch f.produits where f.id=:id")
     Optional<Fournisseur> findByIdFetchProduits(@Param("id") Long id);
 
-    Optional<Fournisseur> findByContact(String contact);
+    @Query("select f from Fournisseur f where f.contact like ?1")
+    List<Fournisseur> findByContactContaining(String contact);
     
-    Optional<Fournisseur> findByNom(String nom);
+    @Query("select f from Fournisseur f where f.nom like ?1")
+    List<Fournisseur> findByNomContaining(String nom);
     
-    Optional<Fournisseur> findByEmail(String email);
+    @Query("select f from Fournisseur f where f.email like ?1")
+    List<Fournisseur> findByEmailContaining(String email);
 }

@@ -50,31 +50,25 @@ public class FournisseurService {
         });
     }
     
-    public Fournisseur getByNom(String nom) {
+    public List<Fournisseur> getByNomContaining(String nom) {
         if (nom == null || nom.isEmpty()) {
             throw new FournisseurException("Nom vide");
         }
-        return fournisseurRepository.findByNom(nom).orElseThrow(() -> {
-            throw new FournisseurException("Nom inconnu");
-        });
+        return fournisseurRepository.findByNomContaining(nom);
     }
 
-    public Fournisseur getByContact(String contact) {
+    public List<Fournisseur> getByContactContaining(String contact) {
         if (contact == null || contact.isEmpty()) {
             throw new FournisseurException("Contact vide");
         }
-        return fournisseurRepository.findByContact(contact).orElseThrow(() -> {
-            throw new FournisseurException("Contact inconnu");
-        });
+        return fournisseurRepository.findByContactContaining(contact);
     }
     
-    public Fournisseur getByEmail(String email) {
+    public List<Fournisseur> getByEmailContaining(String email) {
         if (email == null || email.isEmpty()) {
             throw new FournisseurException("Email vide");
         }
-        return fournisseurRepository.findByEmail(email).orElseThrow(() -> {
-            throw new FournisseurException("Email inconnu");
-        });
+        return fournisseurRepository.findByEmailContaining(email);
     }
     
     
