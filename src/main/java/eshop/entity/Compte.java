@@ -2,30 +2,21 @@ package eshop.entity;
 
 import java.util.Objects;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.Embedded;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @MappedSuperclass
 public abstract class Compte {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seqCompte")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqCompte")
 	private Long id;
-	@Column(name="name")
+	@Column(name = "name")
 	private String nom;
-	@Column(name="email")
+	@Column(name = "email")
 	private String email;
 	@Embedded
 	private Adresse adresse;

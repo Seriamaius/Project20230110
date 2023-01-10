@@ -1,7 +1,6 @@
 package eshop.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,12 +39,12 @@ public class FournisseurService {
             throw new FournisseurException("fournisseur null");
         }
     }
-    
+
     public Fournisseur getFournisseurProduits(Fournisseur fournisseur) {
-    	checkFournisseurIsNotNull(fournisseur);
-    	return fournisseurRepository.findByIdFetchProduits(fournisseur.getId()).orElseThrow(() -> {
-    		throw new FournisseurException("Aucun produits pour ce fournisseur");
-    	});
+        checkFournisseurIsNotNull(fournisseur);
+        return fournisseurRepository.findByIdFetchProduits(fournisseur.getId()).orElseThrow(() -> {
+            throw new FournisseurException("Aucun produits pour ce fournisseur");
+        });
     }
 
     public Fournisseur getById(Long id) {
@@ -56,14 +55,14 @@ public class FournisseurService {
             throw new FournisseurException("Fournisseur unknown");
         });
     }
-    
+
     public Fournisseur getByContact(String contact) {
-    	if (contact == null || contact.isEmpty()) {
-    		throw new FournisseurException("Contact vide");
-    	}
-    	return fournisseurRepository.findByContact(contact).orElseThrow(() -> {
-    		throw new FournisseurException("Contact inconnu");
-    	});
+        if (contact == null || contact.isEmpty()) {
+            throw new FournisseurException("Contact vide");
+        }
+        return fournisseurRepository.findByContact(contact).orElseThrow(() -> {
+            throw new FournisseurException("Contact inconnu");
+        });
     }
 
     public void delete(Fournisseur fournisseur) {

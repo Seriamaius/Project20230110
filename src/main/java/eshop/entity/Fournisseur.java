@@ -7,7 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -27,8 +26,8 @@ public class Fournisseur extends Compte {
 	// @OneToOne(mappedBy = "fournisseur")
 	// private Produit produit;
 
-	@OneToMany(mappedBy = "fournisseur",fetch = FetchType.LAZY) //LAZY par defaut sur les collections
-	//ne pas le modifier!!!!!!
+	@OneToMany(mappedBy = "fournisseur", fetch = FetchType.LAZY) // LAZY par defaut sur les collections
+	// ne pas le modifier!!!!!!
 	private List<Produit> produits;
 	// ou Set<Produit>
 	// on ne peut charger qu'une List par requete
@@ -59,12 +58,12 @@ public class Fournisseur extends Compte {
 		this.produits = produits;
 	}
 
-//	public Produit getProduit() {
-//		return produit;
-//	}
-//
-//	public void setProduit(Produit produit) {
-//		this.produit = produit;
-//	}
+	// public Produit getProduit() {
+	// return produit;
+	// }
+	//
+	// public void setProduit(Produit produit) {
+	// this.produit = produit;
+	// }
 
 }
