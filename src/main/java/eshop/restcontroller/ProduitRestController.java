@@ -1,6 +1,7 @@
 package eshop.restcontroller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -51,7 +52,6 @@ public class ProduitRestController {
     }
 
     // POST
-
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
     @JsonView(Views.Common.class)

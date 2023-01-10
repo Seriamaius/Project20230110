@@ -71,20 +71,23 @@ public class FournisseurService {
 		return fournisseurRepository.findByEmailContaining(email);
 	}
 
+
 	public void delete(Fournisseur fournisseur) {
 		checkFournisseurIsNotNull(fournisseur);
 		deleteById(fournisseur.getId());
 	}
 
+    private void deleteById(Long id) {
+        Fournisseur fournisseur = getById(id);
+        produitRepository.updateByFournisseurSetOnSaleToFalse(fournisseur);
+        produitRepository.updateByfournisseurSetfournisseurToNull(fournisseur);
+        fournisseurRepository.delete(fournisseur);
+    }
+
 	public void delete(Long id) {
 		deleteById(id);
 	}
 
-	private void deleteById(Long id) {
-		Fournisseur fournisseur = getById(id);
-		produitRepository.updateByfournisseurSetfournisseurToNull(fournisseur);
-		fournisseurRepository.delete(fournisseur);
-	}
 
 	public List<Fournisseur> getAll() {
 		return fournisseurRepository.findAll();

@@ -25,6 +25,7 @@ import eshop.jsonview.Views;
 @Table(name = "product")
 @SequenceGenerator(name = "seqProduit", sequenceName = "product_id_seq", initialValue = 100, allocationSize = 1)
 public class Produit {
+	@JsonView(Views.Common.class)
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqProduit")
 	@Column(name = "product_id")
@@ -51,7 +52,7 @@ public class Produit {
 	private List<Achat> achats;
 	@Version
 	private int version;
-
+	@JsonView(Views.Common.class)
 	@Column(name = "product_on_sale")
 	private boolean onSale;
 
