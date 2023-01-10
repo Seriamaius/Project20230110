@@ -1,13 +1,13 @@
 package eshop.restcontroller;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import eshop.entity.Produit;
 import eshop.jsonview.Views;
+import eshop.service.FournisseurService;
 import eshop.service.ProduitService;
 import eshop.util.Check;
 
@@ -30,6 +31,9 @@ public class ProduitRestController {
 
     @Autowired
     private ProduitService produitService;
+
+    @Autowired
+    private FournisseurService fournisseurService;
 
     // GET
 
@@ -51,12 +55,20 @@ public class ProduitRestController {
         return produitService.getByLibelle(libelle);
     }
 
+    @GetMapping("fournisseur/{fournisseurId}")
+    @JsonView(Views.Common.class)
+    public List<Produit> getByFournisseur(@PathVariable Long fournisseurId) {
+        return produitService.getByFournisseur(fournisseurService.getById(fournisseurId));
+    }
+
     // POST
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
     @JsonView(Views.Common.class)
     public Produit create(@Valid @RequestBody Produit produit, BindingResult br) {
         Check.checkBindingResulHasError(br);
+        produit.setOnSale(true);
         return produitService.create(produit);
     }
 
@@ -68,5 +80,12 @@ public class ProduitRestController {
         Check.checkBindingResulHasError(br);
         produit.setId(id);
         return produitService.update(produit);
+    }
+
+    // DELETE
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        produitService.delete(id);
     }
 }

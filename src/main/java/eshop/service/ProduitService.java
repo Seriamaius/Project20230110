@@ -22,9 +22,9 @@ public class ProduitService {
             throw new ProduitException();
         }
         if (produit.getFournisseur() == null) {
-        	produit.setOnSale(false);
+            produit.setOnSale(false);
         } else {
-        	produit.setOnSale(true);
+            produit.setOnSale(true);
         }
         return produitRepository.save(produit);
     }
@@ -68,5 +68,9 @@ public class ProduitService {
         produitEnBase.setPrix(produit.getPrix());
         produitEnBase.setOnSale(produit.getOnSale());
         return produitRepository.save(produitEnBase);
+    }
+
+    public void delete(Long id) {
+        produitRepository.deleteById(id);
     }
 }

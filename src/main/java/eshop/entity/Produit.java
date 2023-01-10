@@ -16,6 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -25,33 +27,39 @@ import eshop.jsonview.Views;
 @Table(name = "product")
 @SequenceGenerator(name = "seqProduit", sequenceName = "product_id_seq", initialValue = 100, allocationSize = 1)
 public class Produit {
-	@JsonView(Views.Common.class)
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqProduit")
+	@JsonView(Views.Common.class)
 	@Column(name = "product_id")
 	private Long id;
+
 	@JsonView(Views.Common.class)
 	@Column(name = "product_name", nullable = false)
+	@NotBlank(message = "Le libellé est vide !")
 	private String libelle;
+
 	@JsonView(Views.Common.class)
 	@Column(name = "product_description")
+	@NotBlank(message = "La description est vide !")
 	private String description;
+
 	@JsonView(Views.Common.class)
 	@Column(name = "product_price")
+	@NotNull(message = "Le prix est null !")
 	private double prix;
-	// @OneToOne // cote physique=>modification de la table avec ajout d'une colonne
-	// et d'un
-	// contrainte de type forgein key
+
 	@JsonView(Views.Common.class)
 	@ManyToOne(fetch = FetchType.EAGER) // charger tout le temps EAGER par defaut pour @XXXToOne
 	@JoinColumn(name = "product_supplier_id", foreignKey = @ForeignKey(name = "fk_product_product_supplier_id"))
+	@NotNull(message = "Le fournisseur est null !")
 	private Fournisseur fournisseur;
-	// @ManyToMany(mappedBy = "achats")
-	// private Set<Commande> achats;
+
 	@OneToMany(mappedBy = "id.produit")
 	private List<Achat> achats;
+
 	@Version
 	private int version;
+
 	@JsonView(Views.Common.class)
 	@Column(name = "product_on_sale")
 	private boolean onSale;
