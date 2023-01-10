@@ -9,6 +9,11 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonView;
+
+import eshop.jsonview.Views;
 
 @Entity
 @Table(name = "supplier")
@@ -21,17 +26,13 @@ import javax.persistence.Table;
 @AttributeOverride(name = "email", column = @Column(name = "supplier_email", length = 255))
 @SequenceGenerator(name = "seqCompte", sequenceName = "supplier_id_seq", initialValue = 100, allocationSize = 1)
 public class Fournisseur extends Compte {
+	@JsonView(Views.Common.class)
 	@Column(name = "contact")
+	@NotEmpty(message = "contact manquant")
 	private String contact;
-	// @OneToOne(mappedBy = "fournisseur")
-	// private Produit produit;
-
+	@JsonView(Views.FournisseurWithListProduits.class)
 	@OneToMany(mappedBy = "fournisseur", fetch = FetchType.LAZY) // LAZY par defaut sur les collections
-	// ne pas le modifier!!!!!!
 	private List<Produit> produits;
-	// ou Set<Produit>
-	// on ne peut charger qu'une List par requete
-	// si plusieurs collection il faut utiliser l'interface Set
 
 	public Fournisseur() {
 
@@ -57,13 +58,4 @@ public class Fournisseur extends Compte {
 	public void setProduits(List<Produit> produits) {
 		this.produits = produits;
 	}
-
-	// public Produit getProduit() {
-	// return produit;
-	// }
-	//
-	// public void setProduit(Produit produit) {
-	// this.produit = produit;
-	// }
-
 }

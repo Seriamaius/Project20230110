@@ -23,15 +23,9 @@ public class FournisseurService {
     @Autowired
     private ProduitRepository produitRepository;
 
-    public void create(Fournisseur fournisseur) {
+    public Fournisseur create(Fournisseur fournisseur) {
         checkFournisseurIsNotNull(fournisseur);
-        if (fournisseur.getNom() == null || fournisseur.getNom().isEmpty()) {
-            throw new FournisseurException("nom is null");
-        }
-        if (fournisseur.getEmail() == null || fournisseur.getEmail().isEmpty()) {
-            throw new FournisseurException("email is null");
-        }
-        fournisseurRepository.save(fournisseur);
+        return fournisseurRepository.save(fournisseur);
     }
 
     private void checkFournisseurIsNotNull(Fournisseur fournisseur) {
@@ -55,15 +49,29 @@ public class FournisseurService {
             throw new FournisseurException("Fournisseur unknown");
         });
     }
+    
+    public List<Fournisseur> getByNomContaining(String nom) {
+        if (nom == null || nom.isEmpty()) {
+            throw new FournisseurException("Nom vide");
+        }
+        return fournisseurRepository.findByNomContaining(nom);
+    }
 
-    public Fournisseur getByContact(String contact) {
+    public List<Fournisseur> getByContactContaining(String contact) {
         if (contact == null || contact.isEmpty()) {
             throw new FournisseurException("Contact vide");
         }
-        return fournisseurRepository.findByContact(contact).orElseThrow(() -> {
-            throw new FournisseurException("Contact inconnu");
-        });
+        return fournisseurRepository.findByContactContaining(contact);
     }
+    
+    public List<Fournisseur> getByEmailContaining(String email) {
+        if (email == null || email.isEmpty()) {
+            throw new FournisseurException("Email vide");
+        }
+        return fournisseurRepository.findByEmailContaining(email);
+    }
+    
+    
 
     public void delete(Fournisseur fournisseur) {
         checkFournisseurIsNotNull(fournisseur);

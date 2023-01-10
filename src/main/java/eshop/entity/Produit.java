@@ -17,6 +17,10 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import eshop.jsonview.Views;
+
 @Entity
 @Table(name = "product")
 @SequenceGenerator(name = "seqProduit", sequenceName = "product_id_seq", initialValue = 100, allocationSize = 1)
@@ -25,15 +29,19 @@ public class Produit {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqProduit")
 	@Column(name = "product_id")
 	private Long id;
+	@JsonView(Views.Common.class)
 	@Column(name = "product_name", nullable = false)
 	private String libelle;
+	@JsonView(Views.Common.class)
 	@Column(name = "product_description")
 	private String description;
+	@JsonView(Views.Common.class)
 	@Column(name = "product_price")
 	private double prix;
 	// @OneToOne // cote physique=>modification de la table avec ajout d'une colonne
 	// et d'un
 	// contrainte de type forgein key
+	@JsonView(Views.Common.class)
 	@ManyToOne(fetch = FetchType.EAGER) // charger tout le temps EAGER par defaut pour @XXXToOne
 	@JoinColumn(name = "product_supplier_id", foreignKey = @ForeignKey(name = "fk_product_product_supplier_id"))
 	private Fournisseur fournisseur;
@@ -43,6 +51,9 @@ public class Produit {
 	private List<Achat> achats;
 	@Version
 	private int version;
+
+	@Column(name = "product_on_sale")
+	private boolean onSale;
 
 	public List<Achat> getAchats() {
 		return achats;
@@ -114,6 +125,14 @@ public class Produit {
 
 	public void setVersion(int version) {
 		this.version = version;
+	}
+
+	public boolean getOnSale() {
+		return this.onSale;
+	}
+
+	public void setOnSale(boolean onSale) {
+		this.onSale = onSale;
 	}
 
 	@Override

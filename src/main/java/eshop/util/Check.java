@@ -5,9 +5,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.server.ResponseStatusException;
 
 public class Check {
-    public static void checkBindingResultError(BindingResult br) {
-        if (br.hasErrors()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
-    }
+	public static void checkBindingResulHasError(BindingResult br) {
+		if (br.hasErrors()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+		}
+	}
 }

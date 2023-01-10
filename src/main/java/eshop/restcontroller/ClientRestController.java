@@ -59,7 +59,7 @@ public class ClientRestController {
     @PostMapping("")
     @JsonView(Views.Common.class)
     public Client create(@Valid @RequestBody Client client, BindingResult br) {
-        Check.checkBindingResultError(br);
+        Check.checkBindingResulHasError(br);
         return clientService.update(client);
     }
 
@@ -68,7 +68,7 @@ public class ClientRestController {
     @JsonView(Views.Common.class)
     public Client update(@Valid @RequestBody Client client,
                          BindingResult br, @PathVariable Long id) {
-        Check.checkBindingResultError(br);
+        Check.checkBindingResulHasError(br);
         client.setId(id);
         return clientService.update(client);
     }
