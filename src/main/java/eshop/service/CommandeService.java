@@ -7,7 +7,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import eshop.entity.Adresse;
 import eshop.entity.Client;
 import eshop.entity.Commande;
 import eshop.exception.CommandeException;
