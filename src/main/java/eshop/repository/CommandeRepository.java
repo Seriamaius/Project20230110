@@ -13,9 +13,9 @@ import eshop.entity.Commande;
 
 public interface CommandeRepository extends JpaRepository<Commande, Long>{
 	
-	Optional<Commande> findByNumber(@Param("number")Long number);	
+	Optional<Commande> findByNumero(@Param("numero")Long numero);	
 	List<Commande> findByClient (Client client);
 	List<Commande> findByDate(LocalDate date);
-	@Query("select c from Commande left join fetch c.client where c.numero=:numero")
-	Optional<Commande> findByNumberFetchClient(@Param("number") Long number);
+	@Query("select c from Commande c left join fetch c.client where c.numero=:numero")
+	Optional<Commande> findByNumberFetchClient(@Param("numero") Long numero);
 }

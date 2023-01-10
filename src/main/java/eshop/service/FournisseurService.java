@@ -23,23 +23,10 @@ public class FournisseurService {
 	@Autowired
 	private ProduitRepository produitRepository;
 
-<<<<<<< HEAD
-	public void create(Fournisseur fournisseur) {
+	public Fournisseur create(Fournisseur fournisseur) {
 		checkFournisseurIsNotNull(fournisseur);
-		if (fournisseur.getNom() == null || fournisseur.getNom().isEmpty()) {
-			throw new FournisseurException("nom is null");
-		}
-		if (fournisseur.getEmail() == null || fournisseur.getEmail().isEmpty()) {
-			throw new FournisseurException("email is null");
-		}
-		fournisseurRepository.save(fournisseur);
+		return fournisseurRepository.save(fournisseur);
 	}
-=======
-    public Fournisseur create(Fournisseur fournisseur) {
-        checkFournisseurIsNotNull(fournisseur);
-        return fournisseurRepository.save(fournisseur);
-    }
->>>>>>> main
 
 	private void checkFournisseurIsNotNull(Fournisseur fournisseur) {
 		if (fournisseur == null) {
@@ -50,11 +37,10 @@ public class FournisseurService {
 	public Fournisseur getFournisseurProduits(Fournisseur fournisseur) {
 		checkFournisseurIsNotNull(fournisseur);
 		return fournisseurRepository.findByIdFetchProduits(fournisseur.getId()).orElseThrow(() -> {
-			throw new FournisseurException("Aucun produi" + "ts pour ce fournisseur");
+			throw new FournisseurException("Aucun produits pour ce fournisseur");
 		});
 	}
 
-<<<<<<< HEAD
 	public Fournisseur getById(Long id) {
 		if (id == null) {
 			throw new IdException();
@@ -64,47 +50,26 @@ public class FournisseurService {
 		});
 	}
 
-	public Fournisseur getByContact(String contact) {
+	public List<Fournisseur> getByNomContaining(String nom) {
+		if (nom == null || nom.isEmpty()) {
+			throw new FournisseurException("Nom vide");
+		}
+		return fournisseurRepository.findByNomContaining(nom);
+	}
+
+	public List<Fournisseur> getByContactContaining(String contact) {
 		if (contact == null || contact.isEmpty()) {
 			throw new FournisseurException("Contact vide");
 		}
-		return fournisseurRepository.findByContact(contact).orElseThrow(() -> {
-			throw new FournisseurException("Contact inconnu");
-		});
+		return fournisseurRepository.findByContactContaining(contact);
 	}
-=======
-    public Fournisseur getById(Long id) {
-        if (id == null) {
-            throw new IdException();
-        }
-        return fournisseurRepository.findById(id).orElseThrow(() -> {
-            throw new FournisseurException("Fournisseur unknown");
-        });
-    }
-    
-    public List<Fournisseur> getByNomContaining(String nom) {
-        if (nom == null || nom.isEmpty()) {
-            throw new FournisseurException("Nom vide");
-        }
-        return fournisseurRepository.findByNomContaining(nom);
-    }
 
-    public List<Fournisseur> getByContactContaining(String contact) {
-        if (contact == null || contact.isEmpty()) {
-            throw new FournisseurException("Contact vide");
-        }
-        return fournisseurRepository.findByContactContaining(contact);
-    }
-    
-    public List<Fournisseur> getByEmailContaining(String email) {
-        if (email == null || email.isEmpty()) {
-            throw new FournisseurException("Email vide");
-        }
-        return fournisseurRepository.findByEmailContaining(email);
-    }
-    
-    
->>>>>>> main
+	public List<Fournisseur> getByEmailContaining(String email) {
+		if (email == null || email.isEmpty()) {
+			throw new FournisseurException("Email vide");
+		}
+		return fournisseurRepository.findByEmailContaining(email);
+	}
 
 	public void delete(Fournisseur fournisseur) {
 		checkFournisseurIsNotNull(fournisseur);

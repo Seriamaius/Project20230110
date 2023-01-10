@@ -11,21 +11,20 @@ import eshop.entity.Client;
 import eshop.entity.Commande;
 import eshop.exception.CommandeException;
 import eshop.exception.IdException;
-import eshop.repository.ClientRepository;
 import eshop.repository.CommandeRepository;
 
 @Service
 public class CommandeService {
 	@Autowired
 	private CommandeRepository commandeRepo;
-	@Autowired
-	private ClientRepository clientRepo;
+	//@Autowired
+	//private ClientRepository clientRepo;
 
 	public void create(Commande commande) {
 		checkCommandeIsNotNull(commande);
-		if (commande.getAchats()==null || commande.getAchats().isEmpty()) {
+		/*if (commande.getAchats()==null || commande.getAchats().isEmpty()) {
 			throw new CommandeException("pas de liste d'achat !");
-		}
+		}*/
 		commandeRepo.save(commande);
 	}
 	private void checkCommandeIsNotNull(Commande commande) {
@@ -41,11 +40,11 @@ public class CommandeService {
 		});
 	}
 
-	public Commande getById(Long numero) {
+	public Commande getByNumero(Long numero) {
 		if (numero == null) {
 			throw new IdException();
 		}
-		return commandeRepo.findById(numero).orElseThrow(() -> {
+		return commandeRepo.findByNumero(numero).orElseThrow(() -> {
 			throw new CommandeException("Commande unknow ");
 		});
 	}
@@ -60,7 +59,7 @@ public class CommandeService {
 	}
 
 	private void deleteByNumero(long numero) {
-		Commande commande = getById(numero);
+		Commande commande = getByNumero(numero);
 		// clientRepo.updateByCommandeSetCommandeToNull(commande);
 		commandeRepo.delete(commande);
 	}
@@ -91,7 +90,7 @@ public class CommandeService {
 	}
 
 	public Commande update(Commande commande) {
-		Commande commandeEnBase = getById(commande.getNumero());
+		Commande commandeEnBase = getByNumero(commande.getNumero());
 		commandeEnBase.setNumero(null);
 		if (commande.getClient() != null) {
 			commandeEnBase.setClient(new Client(
