@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -53,7 +54,7 @@ public class CommandeRestController {
 		return commandeService.getByDate(date);
 	}
 	//par client
-	@GetMapping("/{id}")
+	@GetMapping("/Client/{id}")
 	@JsonView(Views.CommandeWithClient.class)
 	public List<Commande> getByClient(@PathVariable Long id){
 		Client client=clientService.getById(id);
@@ -79,4 +80,12 @@ public class CommandeRestController {
 		commandeService.update(commande);
 	}
 	
+	//DELETE
+	
+	@PutMapping("/{numero}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void delete(@PathVariable Long numero) {
+		Commande commande=getByNumero(numero);
+		commandeService.delete(commande);
+	}
 }
