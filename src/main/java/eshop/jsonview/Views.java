@@ -4,4 +4,13 @@ public class Views {
 	public static class Common{
 		
 	}
+
+	public static class Client extends Common {
+
+	}
+
+	public static class ClientWithCommandes extends Common {
+
+	}
+
 }
