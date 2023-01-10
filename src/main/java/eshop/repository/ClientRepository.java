@@ -23,9 +23,9 @@ public interface ClientRepository extends JpaRepository<Client, Long>{
 
 	Optional<Client> findByCommandes(String commandes);
 
-	@Query("select f from Client f where f.email like ?1")
+
 	List<Client> findClientByEmailContaining(String email);
-	@Query("select f from Client f where f.nom like ?1")
+
 	List<Client> findByNomContaining(String nom);
 
 	@Query("select c from Client c left join fetch c.commandes where c.id=:id")

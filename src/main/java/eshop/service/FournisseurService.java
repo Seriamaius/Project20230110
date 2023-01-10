@@ -107,7 +107,7 @@ public class FournisseurService {
 		return fournisseurRepository.findAll(page.nextOrLastPageable());
 	}
 
-	public Page<Fournisseur> getPrevious(Page<Fournisseur> page) {
+	public Page<Fournisseur> getPreviousPage(Page<Fournisseur> page) {
 		if (page == null) {
 			throw new FournisseurException();
 		}
