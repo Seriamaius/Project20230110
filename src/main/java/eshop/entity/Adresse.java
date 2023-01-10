@@ -2,13 +2,22 @@ package eshop.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonView;
+
+import eshop.jsonview.Views;
 
 @Embeddable
 public class Adresse {
+	@JsonView(Views.Common.class)
 	private String numero;
+	@JsonView(Views.Common.class)
 	@Column(name="street")
 	private String rue;
+	@JsonView(Views.Common.class)
 	private String codePostal;
+	@JsonView(Views.Common.class)
 	private String ville;
 
 	public Adresse() {

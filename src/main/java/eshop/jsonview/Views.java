@@ -6,5 +6,10 @@ public class Views {
 	}
 
 	public static class Produit extends Common {
+
+	}
+	
+	public static class FournisseurWithListProduits extends Common {
+
 	}
 }

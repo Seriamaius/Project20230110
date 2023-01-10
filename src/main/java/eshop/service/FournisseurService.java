@@ -23,15 +23,9 @@ public class FournisseurService {
     @Autowired
     private ProduitRepository produitRepository;
 
-    public void create(Fournisseur fournisseur) {
+    public Fournisseur create(Fournisseur fournisseur) {
         checkFournisseurIsNotNull(fournisseur);
-        if (fournisseur.getNom() == null || fournisseur.getNom().isEmpty()) {
-            throw new FournisseurException("nom is null");
-        }
-        if (fournisseur.getEmail() == null || fournisseur.getEmail().isEmpty()) {
-            throw new FournisseurException("email is null");
-        }
-        fournisseurRepository.save(fournisseur);
+        return fournisseurRepository.save(fournisseur);
     }
 
     private void checkFournisseurIsNotNull(Fournisseur fournisseur) {
@@ -55,6 +49,15 @@ public class FournisseurService {
             throw new FournisseurException("Fournisseur unknown");
         });
     }
+    
+    public Fournisseur getByNom(String nom) {
+        if (nom == null || nom.isEmpty()) {
+            throw new FournisseurException("Nom vide");
+        }
+        return fournisseurRepository.findByNom(nom).orElseThrow(() -> {
+            throw new FournisseurException("Nom inconnu");
+        });
+    }
 
     public Fournisseur getByContact(String contact) {
         if (contact == null || contact.isEmpty()) {
@@ -64,6 +67,17 @@ public class FournisseurService {
             throw new FournisseurException("Contact inconnu");
         });
     }
+    
+    public Fournisseur getByEmail(String email) {
+        if (email == null || email.isEmpty()) {
+            throw new FournisseurException("Email vide");
+        }
+        return fournisseurRepository.findByEmail(email).orElseThrow(() -> {
+            throw new FournisseurException("Email inconnu");
+        });
+    }
+    
+    
 
     public void delete(Fournisseur fournisseur) {
         checkFournisseurIsNotNull(fournisseur);
