@@ -1,5 +1,8 @@
 package eshop.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import eshop.jsonview.Views;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -23,8 +26,10 @@ import javax.persistence.Table;
 @Table(name="customer")
 @SequenceGenerator(name="seqCompte",sequenceName = "customer_id_seq",initialValue = 50,allocationSize = 1)
 public class Client extends Compte {
+	@JsonView(Views.Common.class)
 	@Column(name="first_name")
 	private String prenom;
+
 	@Column(name="registry")
 	private LocalDate dateInscription;
 	@Column(name="civility",length = 5)
@@ -32,6 +37,7 @@ public class Client extends Compte {
 	private Civilite civilite;
 	@OneToMany(mappedBy = "client")
 	private List<Commande> commandes;
+	@JsonView(Views.Common.class)
 	@Column(name="password")
 	private String password;
 
