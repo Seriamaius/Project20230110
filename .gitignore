@@ -1,7 +1,6 @@
 #ide vscode
 .vscode/
 #ide eclispe
-.idea
 .classpath
 .project
 .settings/
@@ -9,4 +8,4 @@
 target/
 #macOS
 .DS_Store
-.idea
+.idea/
