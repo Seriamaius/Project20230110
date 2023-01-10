@@ -51,11 +51,11 @@ public class FournisseursRestController {
 		return fournisseurServ.update(fournisseur);
 	}
 	
-	// Suppresion Delete
+	// Suppression Delete
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Long id) {
-		// TODO: fournisseurServ.delete(id);
+		fournisseurServ.delete(id);
 	}
 	
 	// Recherche GET

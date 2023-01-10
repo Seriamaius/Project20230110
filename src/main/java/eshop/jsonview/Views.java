@@ -9,9 +9,10 @@ public class Views {
 
 	}
 	
-	public static class FournisseurWithListProduits extends Common {
+	public static class FournisseurWithListProduits extends Common{
 
 	}
+
 
 	public static class Client extends Common {
 
@@ -19,6 +20,10 @@ public class Views {
 
 	public static class ClientWithCommandes extends Common {
 
+	}
+
+	public static class CommandeWithClient{
+		
 	}
 
 }

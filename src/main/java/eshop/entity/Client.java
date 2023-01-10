@@ -60,8 +60,6 @@ public class Client extends Compte {
 		this.civilite = civilite;
 	}
 	
-	
-
 	public String getPassword() {
 		return password;
 	}
