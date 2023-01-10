@@ -36,16 +36,6 @@ public class Commande {
 	@ManyToOne
 	@JoinColumn(name = "order_customer_id", foreignKey = @ForeignKey(name = "order_order_customer_id_fk"))
 	private Client client;
-	// version 1 1 client achète x produit 1 fois
-	// @ManyToMany
-	// @JoinTable(
-	// name="order_details",
-	// joinColumns =@JoinColumn(name="order_details_order_number",foreignKey =
-	// @ForeignKey(name="order_details_order_number_fk")),
-	// inverseJoinColumns = @JoinColumn(name="order_details_product_id",foreignKey =
-	// @ForeignKey(name="order_details_product_id")))
-	// private Set<Produit> achats;
-
 	@OneToMany(mappedBy = "id.commande")
 	private List<Achat> achats;
 

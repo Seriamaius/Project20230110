@@ -23,9 +23,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import eshop.entity.Fournisseur;
+import eshop.exception.FournisseurException;
 import eshop.jsonview.Views;
 import eshop.service.FournisseurService;
 import eshop.util.Check;
+import net.bytebuddy.asm.Advice.OffsetMapping.Sort;
 
 @RestController
 @RequestMapping("/api/fournisseur")
@@ -33,7 +35,7 @@ public class FournisseursRestController {
 
 	@Autowired
 	private FournisseurService fournisseurServ;
-
+	
 	// Creation POST
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping("")
@@ -84,11 +86,20 @@ public class FournisseursRestController {
 		return fournisseurServ.getByEmailContaining(email);
 	}
 
-	// Recherche page fournisseurs GET
+	// Recherche list fournisseurs GET
 	@GetMapping("")
 	@JsonView(Views.Common.class)
 	public List<Fournisseur> getAllFournisseur() {
 		return fournisseurServ.getAll();
+	}
+	
+	@GetMapping("/page/{pageNumber}")
+	@JsonView(Views.Common.class)
+	public List<Fournisseur> getFournisseurInPage (@PathVariable int pageNumber) {
+		if (pageNumber < 0 || pageNumber > fournisseurServ.getAll(PageRequest.ofSize(20)).getTotalPages()) {
+			throw new FournisseurException("Numero page errone");
+		}
+		return fournisseurServ.getAll(PageRequest.of(pageNumber, 20)).getContent();
 	}
 
 	// Recherche avec detail produits GET
