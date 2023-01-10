@@ -14,8 +14,6 @@ public interface FournisseurRepository extends JpaRepository<Fournisseur, Long> 
 
     List<Fournisseur> findByProduitsIsTrue();
 
-    List<Fournisseur> findByNom(String nom);
-
     List<Fournisseur> findByNomContaining(String nom);
 
     Page<Fournisseur> findByNomContaining(String nom, Pageable pageable);
@@ -24,4 +22,8 @@ public interface FournisseurRepository extends JpaRepository<Fournisseur, Long> 
     Optional<Fournisseur> findByIdFetchProduits(@Param("id") Long id);
 
     Optional<Fournisseur> findByContact(String contact);
+    
+    Optional<Fournisseur> findByNom(String nom);
+    
+    Optional<Fournisseur> findByEmail(String email);
 }

@@ -8,16 +8,28 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonView;
+
+import eshop.jsonview.Views;
 
 @MappedSuperclass
 public abstract class Compte {
+	@JsonView(Views.Common.class)
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqCompte")
 	private Long id;
+	@JsonView(Views.Common.class)
 	@Column(name = "name")
+	@NotEmpty(message = "nom manquant")
 	private String nom;
+	@JsonView(Views.Common.class)
 	@Column(name = "email")
+	@NotEmpty(message = "email manquant")
 	private String email;
+	@JsonView(Views.Common.class)
 	@Embedded
 	private Adresse adresse;
 
