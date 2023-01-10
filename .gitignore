@@ -1,6 +1,7 @@
 #ide vscode
 .vscode/
 #ide eclispe
+.idea
 .classpath
 .project
 .settings/

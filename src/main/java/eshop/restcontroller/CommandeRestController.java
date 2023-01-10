@@ -1,5 +1,6 @@
 package eshop.restcontroller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -17,8 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import eshop.entity.Client;
 import eshop.entity.Commande;
 import eshop.jsonview.Views;
+import eshop.service.ClientService;
 import eshop.service.CommandeService;
 import eshop.util.Check;
 
@@ -27,6 +30,8 @@ import eshop.util.Check;
 public class CommandeRestController {
 	@Autowired
 	private CommandeService commandeService;
+	@Autowired
+	private ClientService clientService;
 	
 	//GET 
 	
@@ -38,13 +43,22 @@ public class CommandeRestController {
 	//par numero de commande
 	@GetMapping("/{numero}")
 	@JsonView(Views.Common.class)
-	public Commande getByNumero(@PathVariable long numero) {
+	public Commande getByNumero(@PathVariable Long numero) {
 		return commandeService.getByNumero(numero);
 	}
 	//par date
-	
+	@GetMapping("/{date}")
+	@JsonView(Views.Common.class)
+	public List<Commande> getByDate(@PathVariable LocalDate date) {
+		return commandeService.getByDate(date);
+	}
 	//par client
-	
+	@GetMapping("/{id}")
+	@JsonView(Views.CommandeWithClient.class)
+	public List<Commande> getByClient(@PathVariable Long id){
+		Client client=clientService.getById(id);
+		return commandeService.getByClient(client);
+	}
 	//POST
 	
 	@ResponseStatus(HttpStatus.CREATED)

@@ -1,5 +1,6 @@
 package eshop.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,19 @@ public class CommandeService {
 		return commandeRepo.findByNumero(numero).orElseThrow(() -> {
 			throw new CommandeException("Commande unknow ");
 		});
+	}
+	
+	public List<Commande> getByDate(LocalDate date) {
+		if(date ==null) {
+			throw new CommandeException("Pas de date");
+		}
+		return commandeRepo.findByDate(date);
+	}
+	public List<Commande> getByClient(Client client){
+		if(client.getId()==null) {
+			throw new CommandeException("pas de Client associé");
+		}
+		return commandeRepo.findByClient(client);
 	}
 
 	public void delete(Commande commande) {

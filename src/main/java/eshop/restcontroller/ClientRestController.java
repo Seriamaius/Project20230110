@@ -20,7 +20,7 @@ import java.util.List;
 public class ClientRestController {
 
     @Autowired
-    private ClientService clientService;
+    private ClientService  clientService;
 
     @GetMapping("")
     @JsonView(Views.Common.class)
@@ -60,7 +60,7 @@ public class ClientRestController {
     @JsonView(Views.Common.class)
     public Client create(@Valid @RequestBody Client client, BindingResult br) {
         Check.checkBindingResulHasError(br);
-        return clientService.update(client);
+        return clientService.create(client);
     }
 
 
